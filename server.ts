@@ -3,7 +3,7 @@ import next from "next";
 import { Server } from "socket.io";
 
 import { HandlerCodeSocket } from "./Socket/HandlerCodeSocket";
-import { HandlerHoldSocket } from "./Socket/HandlerHoldSocket";
+import { HandlerSubmitSocket } from "./Socket/HandlerSubmitSocket";
 import { HandlerInputSocket } from "./Socket/HandlerInputSocket";
 
 const dev = process.env.NODE_ENV !== "production";
@@ -20,10 +20,10 @@ app.prepare().then(() => {
 
   io.on("connection", (socket) => {
     console.log("socket is working successfully");
-
+    console.log("all rooms ", io.sockets.adapter.rooms);
     HandlerCodeSocket(socket, io);
     HandlerInputSocket(socket, io);
-    HandlerHoldSocket(socket, io);
+    HandlerSubmitSocket(socket, io);
   });
 
   httpServer

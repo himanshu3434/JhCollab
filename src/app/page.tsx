@@ -13,7 +13,7 @@ export default function Home() {
   const handleHold = () => {
     setHold(true);
 
-    socket.emit("hold", true);
+    socket.emit("submit", { roomId: "124", code, input });
   };
   const handleCodeChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setCode(e.target.value);
@@ -30,6 +30,7 @@ export default function Home() {
 
     function onConnect() {
       setIsConnected(true);
+
       setTransport(socket.io.engine.transport.name);
 
       socket.io.engine.on("upgrade", (transport) => {
@@ -45,7 +46,7 @@ export default function Home() {
       console.log("  recived data ", data);
       setCode(data);
     });
-    socket.on("hold", (data) => {
+    socket.on("submit", (data) => {
       console.log(" Hold Status", data);
       setHold(data);
     });
@@ -66,7 +67,7 @@ export default function Home() {
       socket.off("connect", onConnect);
       socket.off("disconnect", onDisconnect);
       socket.off("codee");
-      socket.off("hold");
+      socket.off("submit");
       socket.off("output");
     };
   }, []);
