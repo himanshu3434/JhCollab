@@ -31,3 +31,7 @@ export type roomPrismaType = {
   status: string;
   error: string;
 };
+
+export type RoomUserMapType = {
+  [key: string]: string;
+};
